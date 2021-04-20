@@ -1,14 +1,34 @@
-import { ADDCONTACT, DELETECONTACT } from "./contactsConstants"
+import { ADDCONTACT, DELETECONTACT, FILTERCONTACTS } from "./contactsConstants"
+import { combineReducers } from "redux"
 
-const contactsReducer = (state = [], action) => {
-  switch (action.type) {
+// const initialState = {
+//   items: [],
+//   filter: "",
+// }
+
+const contactsItems = (state = [], { type, payload }) => {
+  switch (type) {
     case ADDCONTACT:
-      return [...state, action.payload]
+      return [...state, payload]
     case DELETECONTACT:
-      return [...state.filter((item) => item.name !== action.payload)]
+      return [...state.filter((item) => item.id !== payload.id)]
     default:
       return state
   }
 }
+
+const contactsFilter = (state = "", { type, payload }) => {
+  switch (type) {
+    case FILTERCONTACTS:
+      return payload
+    default:
+      return state
+  }
+}
+
+const contactsReducer = combineReducers({
+  items: contactsItems,
+  filter: contactsFilter,
+})
 
 export { contactsReducer }

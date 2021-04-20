@@ -1,70 +1,58 @@
-import "./App.css"
 import { Component } from "react"
+import { connect } from "react-redux"
+import { addContact, deleteContact, filterContacts } from "./redux/contacts/contactsActions"
 import Phonebook from "./components/Phonebook/Phonebook"
 import Contacts from "./components/Contacts/Contacts"
 import Section from "./components/Section/Section"
 import Filter from "./components/Filter/Filter"
+import "./App.css"
 
-class App extends Component {
-  state = {
-    contacts: [],
-    filter: "",
-  }
-
-  componentDidMount() {
-    const contacts = localStorage.getItem("contacts")
-    const parseContacts = JSON.parse(contacts)
-
-    if (parseContacts) {
-      this.setState({ contacts: parseContacts })
+const App = ({ items, filter, addContact, deleteContact, filterContacts }) => {
+  const submitForm = (data) => {
+    if (items.length > 0) {
+      const isOriginal = items.find((item) => item.name.toLowerCase() === data.name.toLowerCase())
+      if (isOriginal) {
+        alert(`${data.name} is already in contacts`)
+        return
+      }
     }
-  }
-  componentDidUpdate(prevProps, prevState) {
-    if (this.state.contacts !== prevState.contacts) {
-      localStorage.setItem("contacts", JSON.stringify(this.state.contacts))
-    }
-  }
-  submitForm = (data) => {
-    const checkOnOriginal = this.state.contacts.find((el) => data.name.toLowerCase() === el.name.toLowerCase())
-    if (checkOnOriginal) {
-      alert(`${data.name} is already in contacts`)
-      return
-    } else {
-      this.setState({ contacts: [...this.state.contacts, data] })
-    }
+    addContact(data)
   }
 
-  filterContact = (e) => {
-    this.setState({ filter: e.target.value })
+  const SetFilter = (e) => {
+    filterContacts(e.target.value)
   }
 
-  visiableContact = () => {
-    const normalizedFilter = this.state.filter.toLowerCase()
-    return this.state.contacts.filter((el) => el.name.toLowerCase().includes(normalizedFilter))
-  }
-  deleteContact = (data) => {
-    this.setState({
-      contacts: this.state.contacts.filter((el) => el.id !== data.id),
-    })
-  }
+  return (
+    <>
+      <Section title="Phonebook">
+        <Phonebook onSubmit={submitForm} />
+      </Section>
+      <Section title="Contacts">
+        <Filter value={filter} onChange={SetFilter} />
+        <ul className="contacts__name">
+          {items.map((el) => (
+            <Contacts key={el.id} contacts={el} deleteContact={deleteContact} />
+          ))}
+        </ul>
+        )
+      </Section>
+    </>
+  )
+}
 
-  render() {
-    return (
-      <>
-        <Section title="Phonebook">
-          <Phonebook onSubmit={this.submitForm} />
-        </Section>
-        <Section title="Contacts">
-          <Filter value={this.state.filter} onChange={this.filterContact} />
-          <ul className="contacts__name">
-            {this.visiableContact().map((el) => (
-              <Contacts key={el.id} contacts={el} deleteContact={this.deleteContact} />
-            ))}
-          </ul>
-        </Section>
-      </>
-    )
+const mapStateToProps = ({ contacts }) => {
+  return {
+    items: contacts.items.filter((item) => item.name.toLowerCase().includes(contacts.filter.toLowerCase())),
+    filter: contacts.filter,
   }
 }
 
-export default App
+const mapDispatchToProps = (dispatch) => {
+  return {
+    addContact: (name) => dispatch(addContact(name)),
+    deleteContact: (id) => dispatch(deleteContact(id)),
+    filterContacts: (name) => dispatch(filterContacts(name)),
+  }
+}
+export default connect(mapStateToProps, mapDispatchToProps)(App)

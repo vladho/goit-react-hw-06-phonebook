@@ -3,6 +3,7 @@ import PropTypes from "prop-types"
 import styles from "./Contacts.module.css"
 
 const Contacts = ({ contacts, deleteContact }) => {
+  console.log(contacts)
   const { name, number } = contacts
   return (
     <>
