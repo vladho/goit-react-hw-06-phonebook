@@ -20,7 +20,6 @@ class App extends Component {
     }
   }
   componentDidUpdate(prevProps, prevState) {
-    console.log("sdf")
     if (this.state.contacts !== prevState.contacts) {
       localStorage.setItem("contacts", JSON.stringify(this.state.contacts))
     }
@@ -35,7 +34,7 @@ class App extends Component {
     }
   }
 
-  filterForm = (e) => {
+  filterContact = (e) => {
     this.setState({ filter: e.target.value })
   }
 
@@ -56,7 +55,7 @@ class App extends Component {
           <Phonebook onSubmit={this.submitForm} />
         </Section>
         <Section title="Contacts">
-          <Filter value={this.state.filter} onChange={this.filterForm} />
+          <Filter value={this.state.filter} onChange={this.filterContact} />
           <ul className="contacts__name">
             {this.visiableContact().map((el) => (
               <Contacts key={el.id} contacts={el} deleteContact={this.deleteContact} />
