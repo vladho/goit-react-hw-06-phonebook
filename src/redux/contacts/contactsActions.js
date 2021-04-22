@@ -1,27 +1,6 @@
-import {
-  DELETECONTACT,
-  ADDCONTACT,
-  FILTERCONTACTS,
-  GETCONTACTS,
-} from "./contactsConstants";
+import { createAction } from "@reduxjs/toolkit"
 
-const addContact = (contact) => ({
-  type: ADDCONTACT,
-  payload: contact,
-});
-
-const deleteContact = (id) => ({
-  type: DELETECONTACT,
-  payload: id,
-});
-const filterContacts = (name) => ({
-  type: FILTERCONTACTS,
-  payload: name,
-});
-
-const getContacts = (contacts) => ({
-  type: GETCONTACTS,
-  payload: contacts,
-});
-
-export { addContact, deleteContact, filterContacts, getContacts };
+export const addContact = createAction("@contact/add")
+export const deleteContact = createAction("@contact/delete")
+export const filterContacts = createAction("@contacts/filter")
+export const getContacts = createAction("@contacts/get")
