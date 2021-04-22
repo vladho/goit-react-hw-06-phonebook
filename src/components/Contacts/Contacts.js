@@ -1,10 +1,9 @@
-import React from "react"
-import PropTypes from "prop-types"
-import styles from "./Contacts.module.css"
+import React from "react";
+import PropTypes from "prop-types";
+import styles from "./Contacts.module.css";
 
 const Contacts = ({ contacts, deleteContact }) => {
-  console.log(contacts)
-  const { name, number } = contacts
+  const { name, number } = contacts;
   return (
     <>
       <li className={styles.name}>
@@ -14,12 +13,12 @@ const Contacts = ({ contacts, deleteContact }) => {
         </button>
       </li>
     </>
-  )
-}
+  );
+};
 
 Contacts.propTypes = {
   contacts: PropTypes.object,
   deleteContact: PropTypes.func.isRequired,
-}
+};
 
-export default Contacts
+export default Contacts;
