@@ -23,7 +23,7 @@ const App = ({
   useEffect(() => {
     const contacts = JSON.parse(localStorage.getItem("contacts"));
     getContacts(contacts);
-  }, []);
+  }, [getContacts]);
 
   useEffect(() => {
     localStorage.setItem("contacts", JSON.stringify(items));
