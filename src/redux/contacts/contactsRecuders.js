@@ -4,7 +4,7 @@ import { addContact, deleteContact, getContacts, filterContacts } from "./contac
 
 const contactsItems = createReducer([], {
   [addContact]: (state, { payload }) => [...state, payload],
-  [deleteContact]: (state, { payload }) => [...state.filter((item) => item.id !== payload.id)],
+  [deleteContact]: (state, { payload }) => state.filter((item) => item.id !== payload.id),
   [getContacts]: (_, { payload }) => [...payload],
 })
 
