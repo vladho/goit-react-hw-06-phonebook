@@ -1,15 +1,10 @@
 import React from "react";
 import { connect } from "react-redux";
-import { deleteContact } from "../../redux/contacts/contactsActions";
-import Contacts from "../Contacts/Contacts";
+// import { deleteContact } from "../../redux/contacts/contactsActions";
+// import Contacts from "../Contacts/Contacts";
 import styles from "./Filter.module.css";
 
-const Filter = ({ filter, onChange, items, deleteContact }) => {
-  const filterItems = () => {
-    return items.filter((item) =>
-      item.name.toLowerCase().includes(filter.toLowerCase())
-    );
-  };
+const Filter = ({ filter, onChange, children }) => {
   return (
     <>
       <div className={styles.filter}>
@@ -20,14 +15,11 @@ const Filter = ({ filter, onChange, items, deleteContact }) => {
             value={filter}
             onChange={onChange}
             className={styles.inpt}
+            autoComplete="off"
           />
         </label>
       </div>
-      <ul className="contacts__name">
-        {filterItems().map((el) => (
-          <Contacts key={el.id} contacts={el} deleteContact={deleteContact} />
-        ))}
-      </ul>
+      {children}
     </>
   );
 };
@@ -36,10 +28,4 @@ const mapStateToProps = ({ contacts }) => ({
   filter: contacts.filter,
 });
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    deleteContact: (id) => dispatch(deleteContact(id)),
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Filter);
+export default connect(mapStateToProps)(Filter);

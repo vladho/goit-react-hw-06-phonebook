@@ -9,6 +9,7 @@ import Phonebook from "./components/Phonebook/Phonebook";
 import Section from "./components/Section/Section";
 import Filter from "./components/Filter/Filter";
 import "./App.css";
+import Contacts from "./components/Contacts/Contacts";
 
 const App = ({ items, addContact, filterContacts, getContacts }) => {
   useEffect(() => {
@@ -43,7 +44,9 @@ const App = ({ items, addContact, filterContacts, getContacts }) => {
         <Phonebook onSubmit={submitForm} />
       </Section>
       <Section title="Contacts">
-        <Filter onChange={SetFilter} items={items} />)
+        <Filter onChange={SetFilter}>
+          <Contacts items={items} />
+        </Filter>
       </Section>
     </>
   );
