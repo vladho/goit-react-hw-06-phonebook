@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 // import Contacts from "../Contacts/Contacts";
 import styles from "./Filter.module.css";
 
-const Filter = ({ filter, onChange, children }) => {
+const Filter = ({ filter, onChange }) => {
   return (
     <>
       <div className={styles.filter}>
@@ -19,7 +19,6 @@ const Filter = ({ filter, onChange, children }) => {
           />
         </label>
       </div>
-      {children}
     </>
   );
 };

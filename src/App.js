@@ -44,9 +44,8 @@ const App = ({ items, addContact, filterContacts, getContacts }) => {
         <Phonebook onSubmit={submitForm} />
       </Section>
       <Section title="Contacts">
-        <Filter onChange={SetFilter}>
-          <Contacts items={items} />
-        </Filter>
+        <Filter onChange={SetFilter} />
+        <Contacts items={items} />
       </Section>
     </>
   );
